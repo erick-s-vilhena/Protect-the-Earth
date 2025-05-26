@@ -50,16 +50,17 @@ function spawnEnemies(){
 cnv.addEventListener('click', (e)=>{
     e.preventDefault()
 
-    const angle = Math.atan2(e.clientY - player.y, e.clientX - player.x)
+    const angle = Math.atan2(-(player.y - player.s1.y), -(player.x - player.s1.x))
 
     const velocity = {
         x: Math.cos(angle) * shootingSpeed,
         y: Math.sin(angle) * shootingSpeed
     }
 
-    projectiles.push(new Projectile(player.x, player.y, 3, "#48fcff", velocity))
+    projectiles.push(new Projectile(player.s1.x, player.s1.y, 3, "#48fcff", velocity))
 
     //console.log(projectiles.length)
+    player.s1.angleUpdateValue = -player.s1.angleUpdateValue 
 })
 
 function loop(){
@@ -90,8 +91,14 @@ function checkProjetiles(){
 
             const distance = Math.hypot(pro.x - enemy.x, pro.y - enemy.y)
 
+            //colisão projetil -> inimigo
             if(distance < pro.radius + enemy.radius){
-                enemies.splice(e, 1)
+                if(enemy.radius > 15){
+                    enemy.newRadius = enemy.radius - 10
+                }else{
+                    enemies.splice(e, 1)
+                }
+                
                 projectiles.splice(i, 1)
 
                 createParticle(enemy, pro)

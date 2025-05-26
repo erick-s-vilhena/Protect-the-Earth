@@ -29,22 +29,22 @@ class Player extends Sprite{
         this.s1 = new Sphere(
             this.x + Math.cos(0) * this.radius,
             this.y + Math.sin(0) * this.radius,
-            2,
+            4,
             '#48fcff',
             0.02,
             0,
             this
         )
 
-        this.s2 = new Sphere(
-            this.x + Math.sin(0) * this.radius,
-            this.y + Math.cos(0) * this.radius,
-            2,
-            '#48fcff',
-            0.02,
-            Math.PI,
-            this
-        )
+        // this.s2 = new Sphere(
+        //     this.x + Math.sin(0) * this.radius,
+        //     this.y + Math.cos(0) * this.radius,
+        //     2,
+        //     '#48fcff',
+        //     0.02,
+        //     Math.PI,
+        //     this
+        // )
     }
 
     draw(){
@@ -63,7 +63,7 @@ class Player extends Sprite{
     update(){
         this.draw()
         this.s1.update();
-        this.s2.update();
+        //this.s2.update();
     }
 }
 
@@ -108,6 +108,8 @@ class Projectile extends Sprite{
 class Enemy extends Projectile{
     constructor(x, y, radius, color, velocity){
         super(x, y, radius, color, velocity)
+
+        this.newRadius = radius
     }
 
     draw(){
@@ -121,6 +123,19 @@ class Enemy extends Projectile{
             false)
         ctx.strokeStyle = this.color
         ctx.stroke()
+    }
+
+    shrink(){
+        if(this.newRadius < this.radius){
+            this.radius -= .5
+        }
+    }
+
+    update(){
+        this.shrink()
+        this.draw()
+        this.x += this.velocity.x
+        this.y += this.velocity.y
     }
 }
 
