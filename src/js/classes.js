@@ -24,7 +24,7 @@ class Player extends Sprite{
     constructor(x, y, radius, color){
         super(x, y, radius, color)
 
-        this.coreRadius = radius / 6;
+        this.coreRadius = radius;
 
         this.s1 = new Sphere(
             this.x + Math.cos(0) * this.radius,
@@ -87,5 +87,70 @@ class Sphere extends Sprite{
 
         this.x = this.player.x + Math.cos(this.angle) * (this.player.radius + 20)
         this.y = this.player.y + Math.sin(this.angle) * (this.player.radius + 20)
+    }
+}
+
+class Projectile extends Sprite{
+    constructor(x, y, radius, color, velocity){
+        super(x, y, radius, color)
+
+        this.velocity = velocity
+    }
+
+    update(){
+        this.draw()
+
+        this.x += this.velocity.x
+        this.y += this.velocity.y
+    }
+}
+
+class Enemy extends Projectile{
+    constructor(x, y, radius, color, velocity){
+        super(x, y, radius, color, velocity)
+    }
+
+    draw(){
+        ctx.beginPath()
+        ctx.arc(
+            this.x, 
+            this.y, 
+            this.radius, 
+            0, 
+            Math.PI*2, 
+            false)
+        ctx.strokeStyle = this.color
+        ctx.stroke()
+    }
+}
+
+class Particle extends Projectile{
+    constructor(x, y, radius, color, velocity){
+        super(x, y, radius, color, velocity)
+
+        this.alpha = 1
+    }
+
+    draw(){
+        ctx.save()
+
+        ctx.globalAlpha = this.alpha
+        ctx.beginPath()
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2, false)
+        ctx.fillStyle = this.color
+        ctx.fill()
+
+        ctx.restore()
+    }
+
+    update(){
+        this.draw()
+        this.alpha -= 0.02
+
+        this.x += this.velocity.x
+        this.y += this.velocity.y
+
+        this.velocity.x *= .96
+        this.velocity.y *= .96
     }
 }
