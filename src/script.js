@@ -13,9 +13,40 @@ let enemies = [];
 let particles = [];
 let intervalID;
 
-function spawnEnemies(){
+window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
+        e.preventDefault()
+
+        disparo();
+    }
+})
+
+cnv.addEventListener('click', (e) => {
+    e.preventDefault()
+    
+    disparo();
+})
+
+
+function loop(){
+    requestAnimationFrame(loop, cnv);
+
+    update();
+}
+
+function update(){
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+    ctx.fillRect(0, 0, cnv.width, cnv.height)
+
+    checkInimigos()
+    checkProjetil()
+    checkParticulas()
+    player.update()
+}
+
+function spawnInimigos(){
     intervalID = setInterval(()=>{
-        const radius = Math.floor(Math.random() * 26) + 5
+        const radius = Math.floor(Math.random() * 26) + 10
 
         let posX, posY;
 
@@ -43,13 +74,11 @@ function spawnEnemies(){
 
         enemies.push(new Enemy(posX, posY, radius, color, velocity))
 
-        //console.log(enemies.length)
+        console.log(enemies.length)
     }, 2000)
 }
 
-cnv.addEventListener('click', (e)=>{
-    e.preventDefault()
-
+function disparo(){
     const angle = Math.atan2(-(player.y - player.s1.y), -(player.x - player.s1.x))
 
     const velocity = {
@@ -57,34 +86,17 @@ cnv.addEventListener('click', (e)=>{
         y: Math.sin(angle) * shootingSpeed
     }
 
-    projectiles.push(new Projectile(player.s1.x, player.s1.y, 3, "#48fcff", velocity))
+    projectiles.push(new Projectile(player.s1.x, player.s1.y, 5, "#48fcff", velocity)) 
 
-    //console.log(projectiles.length)
-    player.s1.angleUpdateValue = -player.s1.angleUpdateValue 
-})
-
-function loop(){
-    requestAnimationFrame(loop, cnv);
-
-    update();
+    player.s1.angleUpdateValue = -player.s1.angleUpdateValue
 }
 
-function update(){
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-    ctx.fillRect(0, 0, cnv.width, cnv.height)
-
-    checkEnemies()
-    checkProjetiles()
-    checkParticles()
-    player.update()
-}
-
-function checkProjetiles(){
+function checkProjetil(){
     for(let i = projectiles.length - 1; i >= 0; i--){
         const pro = projectiles[i]
         pro.update()
 
-        checkOffScreen(pro, i);
+        checkProjetilForaDaTela(pro, i);
 
         for(let e = enemies.length - 1; e >= 0; e--){
             const enemy = enemies[e];
@@ -93,21 +105,22 @@ function checkProjetiles(){
 
             //colisão projetil -> inimigo
             if(distance < pro.radius + enemy.radius){
-                if(enemy.radius > 15){
-                    enemy.newRadius = enemy.radius - 10
-                }else{
-                    enemies.splice(e, 1)
-                }
+                // if(enemy.radius > 15){
+                //     enemy.newRadius = enemy.radius - 10
+                // }else{
+                //     enemies.splice(e, 1)
+                // }
+                enemies.splice(e, 1)
                 
                 projectiles.splice(i, 1)
 
-                createParticle(enemy, pro)
+                criarParticulas(enemy)
             }
         }
     }
 }
 
-function checkOffScreen(projectile, index){
+function checkProjetilForaDaTela(projectile, index){
     if(projectile.x + projectile.radius < 0 ||
         projectile.x - projectile.radius > cnv.width ||
         projectile.y + projectile.radius < 0 ||
@@ -118,7 +131,7 @@ function checkOffScreen(projectile, index){
     }
 }
 
-function checkEnemies(){
+function checkInimigos(){
     enemies.forEach((enemy)=>{
         enemy.update()
 
@@ -129,6 +142,10 @@ function checkEnemies(){
         }
     })
 
+    checkInimigosForaDaTela();
+}
+
+function checkInimigosForaDaTela(){
     for(let i = enemies.length - 1; i >= 0; i--){
         const ene = enemies[i]
 
@@ -136,15 +153,15 @@ function checkEnemies(){
         ene.x - ene.radius > cnv.width ||
         ene.y + ene.radius < 0 ||
         ene.y - ene.radius > cnv.height
-    ){
-        enemies.splice(i, 1)
-        console.log(enemies.length)
-    }
+        ){
+            enemies.splice(i, 1)
+            console.log(enemies.length)
+        }
     }
 }
 
 
-function createParticle(enemy, projectile){
+function criarParticulas(enemy){
     for(let i = 0; i < enemy.radius * 2; i++){
         const velocity = {
             x: (Math.random() - 0.5) * (Math.random() * 6),
@@ -153,11 +170,11 @@ function createParticle(enemy, projectile){
 
         const size = Math.random()*2
 
-        particles.push(new Particle(enemy.x, enemy.y, Math.random()*2, enemy.color, velocity))
+        particles.push(new Particle(enemy.x, enemy.y, size, enemy.color, velocity))
     }
 }
 
-function checkParticles(){
+function checkParticulas(){
     for(let i = particles.length - 1; i >= 0; i--){
         const par = particles[i]
 
@@ -170,4 +187,4 @@ function checkParticles(){
 }
 
 loop();
-spawnEnemies();
+spawnInimigos();

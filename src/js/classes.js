@@ -31,7 +31,7 @@ class Player extends Sprite{
             this.y + Math.sin(0) * this.radius,
             4,
             '#48fcff',
-            0.02,
+            0.05,
             0,
             this
         )
