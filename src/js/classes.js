@@ -176,6 +176,10 @@ class Estrelas{
         this.y = y
         this.size = size
         this.alpha = alpha
+        this.alphaOriginal = alpha
+        this.piscando = false
+
+        this.iniciarPiscada();
     }
 
     draw(){
@@ -193,5 +197,21 @@ class Estrelas{
 
     update(){
         this.draw()
+    }
+
+    iniciarPiscada(){
+        setTimeout(()=>{
+            this.piscar();
+
+            this.iniciarPiscada();
+        }, Math.random() * 3000 + 1000)
+    }
+
+    piscar(){
+        this.alpha = this.alphaOriginal - 0.2
+
+        setTimeout(()=>{
+            this.alpha = this.alphaOriginal;
+        }, 200 + Math.random() * 300)
     }
 }

@@ -56,52 +56,17 @@ function update(){
     estrela.update();
 }
 
-function spawnInimigos(){
-    intervalID = setInterval(()=>{
-        const radius = Math.floor(Math.random() * 26) + 10
-
-        let posX, posY;
-
-        if(Math.random() < 0.5){
-
-            posX = Math.random() < 0.5 ? 0 - radius : cnv.width + radius
-
-            posY = Math.random() * cnv.height
-
-        }else{
-
-            posX = Math.random() * cnv.width
-
-            posY = Math.random() < 0.5 ? 0 - radius : cnv.height + radius
-        }
-
-        const angle = Math.atan2(player.y - posY, player.x - posX)
-
-        const velocity = {
-            x: Math.cos(angle),
-            y: Math.sin(angle)
-        }
-
-        const color = 'hsl('+ Math.random() * 360 +', 50%, 50%)';
-
-        enemies.push(new Enemy(posX, posY, radius, color, velocity))
-
-        //console.log(enemies.length)
-    }, 2000)
-}
-
 function criarEstrelas(){
     for(let i = 1; i <= 200; i++){
 
         let posX = Math.random() * cnv.width;
         let posY = Math.random() * cnv.height;
 
-        let tamanho = Math.floor(Math.random() * (3 - 1 + 1)) + 1; // Gera 2, 3 ou 4
+        let tamanho = parseFloat((0.8 + Math.random() * 1.2).toFixed(2));
 
         let alpha = 0.2 + Math.random() * (1 - 0.2);
 
         fundo.push(new Estrelas(posX, posY, tamanho, alpha))
-
     }
 }
 
@@ -111,6 +76,41 @@ function checkEstrelas(){
     })
 }
 
+function spawnInimigos(){
+    intervalID = setInterval(()=>{
+        if(enemies.length < 15){
+            const radius = Math.floor(Math.random() * 26) + 10
+
+            let posX, posY;
+
+            if(Math.random() < 0.5){
+
+                posX = Math.random() < 0.5 ? 0 - radius : cnv.width + radius
+
+                posY = Math.random() * cnv.height
+
+            }else{
+
+                posX = Math.random() * cnv.width
+
+                posY = Math.random() < 0.5 ? 0 - radius : cnv.height + radius
+            }
+
+            const angle = Math.atan2(player.y - posY, player.x - posX)
+
+            const velocity = {
+                x: Math.cos(angle),
+                y: Math.sin(angle)
+            }
+
+            const color = 'hsl('+ Math.random() * 360 +', 50%, 50%)';
+
+            enemies.push(new Enemy(posX, posY, radius, color, velocity))
+        }
+
+        console.log(enemies.length)
+    }, 2000)
+}
 
 function disparo(){
     const angle = Math.atan2(-(player.y - player.s1.y), -(player.x - player.s1.x))
@@ -139,12 +139,12 @@ function checkProjetil(){
 
             //colisão projetil -> inimigo
             if(distance < pro.radius + enemy.radius){
-                // if(enemy.radius > 15){
-                //     enemy.newRadius = enemy.radius - 10
-                // }else{
-                //     enemies.splice(e, 1)
-                // }
-                enemies.splice(e, 1)
+                if(enemy.radius > 15){
+                    enemy.newRadius = enemy.radius - 10
+                }else{
+                    enemies.splice(e, 1)
+                }
+               // enemies.splice(e, 1)
                 
                 projectiles.splice(i, 1)
 
