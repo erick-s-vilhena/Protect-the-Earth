@@ -7,7 +7,13 @@ const ctx = cnv.getContext('2d')
 const imagemTerra = new Image();
 imagemTerra.src = './src/img/terra.svg'; 
 
-const player = new Player(cnv.width/2, cnv.height/2, 30, '#48fcff', imagemTerra);
+const player = new Player({
+    x: cnv.width/2, 
+    y: cnv.height/2, 
+    radius: 40, 
+    img: imagemTerra, 
+    rotacao: 5
+});
 
 const estrela = new Estrelas(101, 210, 2)
 
@@ -66,7 +72,12 @@ function criarEstrelas(){
 
         let alpha = 0.2 + Math.random() * (1 - 0.2);
 
-        fundo.push(new Estrelas(posX, posY, tamanho, alpha))
+        fundo.push(new Estrelas({
+                            x: posX, 
+                            y: posY, 
+                            size: tamanho, 
+                            alpha: alpha
+                        }))
     }
 }
 
@@ -105,10 +116,18 @@ function spawnInimigos(){
 
             const color = 'hsl('+ Math.random() * 360 +', 50%, 50%)';
 
-            enemies.push(new Enemy(posX, posY, radius, color, velocity))
+            enemies.push(new Enemy({
+                                x: posX, 
+                                y: posY, 
+                                radius: radius, 
+                                color: color, 
+                                img: imagemTerra, 
+                                rotacao: 20, 
+                                velocity: velocity
+                            }))
         }
 
-        console.log(enemies.length)
+        //console.log(enemies.length)
     }, 2000)
 }
 
@@ -120,7 +139,12 @@ function disparo(){
         y: Math.sin(angle) * shootingSpeed
     }
 
-    projectiles.push(new Projectile(player.s1.x, player.s1.y, 5, "#48fcff", velocity)) 
+    projectiles.push(new Projectile({
+                                x: player.s1.x, 
+                                y: player.s1.y, 
+                                radius: 5,
+                                velocity: velocity
+                            })) 
 
     player.s1.angleUpdateValue = -player.s1.angleUpdateValue
 }
@@ -194,7 +218,6 @@ function checkInimigosForaDaTela(){
     }
 }
 
-
 function criarParticulas(enemy){
     for(let i = 0; i < enemy.radius * 2; i++){
         const velocity = {
@@ -210,7 +233,13 @@ function criarParticulas(enemy){
 
         const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 
-        particles.push(new Particle(enemy.x, enemy.y, size, color, velocity))
+        particles.push(new Particle({
+                                x: enemy.x, 
+                                y: enemy.y, 
+                                radius: size, 
+                                color: color, 
+                                velocity: velocity
+                            }))
     }
 }
 

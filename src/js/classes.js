@@ -1,9 +1,89 @@
 class Sprite{
-    constructor(x, y, radius, color){
+    constructor({
+        x = 0, 
+        y = 0, 
+        radius = 10, 
+        color = '#48fcff', 
+        img = undefined,
+        rotacao = 0
+    } = {}){
         this.x = x
         this.y = y
         this.radius = radius
         this.color = color
+        this.img = img
+        this.rotacao = rotacao
+
+        this.imgW = radius * 2
+        this.imgH = radius * 2
+
+        this.angulo = 0
+    }
+
+    draw(){
+        ctx.save();
+
+        ctx.beginPath()
+
+        if(!this.img){
+            ctx.arc(
+                this.x,     
+                this.y, 
+                this.radius, 
+                0, Math.PI*2,
+                false
+                )
+            ctx.strokeStyle = this.color
+            ctx.stroke()
+        }
+        
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angulo); 
+
+        if(this.img !== undefined){
+            ctx.drawImage(
+                this.img,  
+                -this.imgW/2,  
+                -this.imgH/2, 
+                this.imgW, 
+                this.imgH
+            );
+        }
+
+        ctx.restore();
+
+        this.angulo += this.rotacao * 0.001
+    }
+}
+
+class Player extends Sprite{
+    constructor(options = {}){
+        super(options)
+
+        this.s1 = new Sphere({
+            x: this.x + Math.cos(0) * this.radius,
+            y: this.y + Math.sin(0) * this.radius,
+            radius: 4,
+            angleUpdateValue: 0.05,
+            player: this
+        })
+
+    }
+
+    update(){
+        this.draw()
+        this.s1.update();
+        //this.s2.update();
+    }
+}
+
+class Sphere extends Sprite{
+    constructor(options = {}){
+        super(options)
+
+        this.angleUpdateValue = options.angleUpdateValue || 1
+        this.player = options.player
+        this.angle = options.angle || 0
     }
 
     draw(){
@@ -17,59 +97,6 @@ class Sprite{
             )
         ctx.fillStyle = this.color
         ctx.fill()
-    }
-}
-
-class Player extends Sprite{
-    constructor(x, y, radius, color, img){
-        super(x, y, radius, color)
-
-        this.coreRadius = radius;
-
-        this.img = img
-        this.imgW = 80
-        this.imgH = 80
-
-        this.angulo = 0
-
-        this.s1 = new Sphere(
-            this.x + Math.cos(0) * this.radius,
-            this.y + Math.sin(0) * this.radius,
-            4,
-            '#48fcff',
-            0.05,
-            0,
-            this
-        )
-
-    }
-
-    draw(){
-        ctx.save();
-        ctx.beginPath()
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angulo); 
-        ctx.drawImage(this.img,  -this.imgW/2,  -this.imgH/2, this.imgW, this.imgW);
-        ctx.strokeStyle = this.color
-        ctx.stroke()
-        ctx.restore();
-        this.angulo += 0.005
-    }
-
-    update(){
-        this.draw()
-        this.s1.update();
-        //this.s2.update();
-    }
-}
-
-class Sphere extends Sprite{
-    constructor(x, y, radius, color, angleUpdateValue, angle, player){
-        super(x, y, radius, color)
-
-        this.angleUpdateValue = angleUpdateValue
-        this.player = player
-        this.angle = angle
     }
 
     update(){
@@ -86,13 +113,13 @@ class Sphere extends Sprite{
     }
 }
 
-class Projectile extends Sprite{
-    constructor(x, y, radius, color, velocity){
-        super(x, y, radius, color)
+class Projectile extends Sphere{
+    constructor(options = {}){
+        super(options)
 
-        this.velocity = velocity
+        this.velocity = options.velocity || {x: 0, y: 0}
     }
-
+    
     update(){
         this.draw()
 
@@ -101,36 +128,26 @@ class Projectile extends Sprite{
     }
 }
 
-class Enemy extends Projectile{
-    constructor(x, y, radius, color, velocity){
-        super(x, y, radius, color, velocity)
+class Enemy extends Sprite{
+    constructor(options = {}){
+        super(options)
 
-        this.newRadius = radius
+    
+        this.newRadius = options.radius
+
+        this.velocity = options.velocity || {x: 0, y: 0}
     }
 
-    draw(){
-        ctx.beginPath()
-        ctx.arc(
-            this.x, 
-            this.y, 
-            this.radius, 
-            0, 
-            Math.PI*2, 
-            false)
-        ctx.strokeStyle = this.color
-        ctx.stroke()
-    }
-
-    shrink(){
+    enconher(){
         if(this.newRadius < this.radius){
             this.radius -= .5
+            this.imgW -= .5
+            this.imgH -= .5
         }
     }
 
-    
-
     update(){
-        this.shrink()
+        this.enconher()
         this.draw()
         this.x += this.velocity.x
         this.y += this.velocity.y
@@ -138,8 +155,8 @@ class Enemy extends Projectile{
 }
 
 class Particle extends Projectile{
-    constructor(x, y, radius, color, velocity){
-        super(x, y, radius, color, velocity)
+    constructor(options = {}){
+        super(options)
 
         this.alpha = 1
     }
@@ -171,7 +188,12 @@ class Particle extends Projectile{
 }
 
 class Estrelas{
-    constructor(x, y, size, alpha){
+    constructor({
+        x = 0, 
+        y = 0, 
+        size = 1, 
+        alpha = 1
+    } = {}){
         this.x = x
         this.y = y
         this.size = size
