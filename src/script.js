@@ -4,14 +4,24 @@ cnv.height = innerHeight;
 
 const ctx = cnv.getContext('2d')
 
-const player = new Player(cnv.width/2, cnv.height/2, 30, '#48fcff')
+const imagemTerra = new Image();
+imagemTerra.src = './src/img/terra.svg'; 
+
+const player = new Player(cnv.width/2, cnv.height/2, 30, '#48fcff', imagemTerra);
+
+const estrela = new Estrelas(101, 210, 2)
 
 const shootingSpeed = 4
 
 let projectiles = [];
 let enemies = [];
 let particles = [];
+let fundo = [];
 let intervalID;
+
+window.addEventListener('resize', () => {
+  location.reload();
+});
 
 window.addEventListener('keydown', (e) => {
     if (e.code === 'Space') {
@@ -35,13 +45,15 @@ function loop(){
 }
 
 function update(){
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
     ctx.fillRect(0, 0, cnv.width, cnv.height)
 
+    checkEstrelas()
     checkInimigos()
     checkProjetil()
     checkParticulas()
     player.update()
+    estrela.update();
 }
 
 function spawnInimigos(){
@@ -74,9 +86,31 @@ function spawnInimigos(){
 
         enemies.push(new Enemy(posX, posY, radius, color, velocity))
 
-        console.log(enemies.length)
+        //console.log(enemies.length)
     }, 2000)
 }
+
+function criarEstrelas(){
+    for(let i = 1; i <= 200; i++){
+
+        let posX = Math.random() * cnv.width;
+        let posY = Math.random() * cnv.height;
+
+        let tamanho = Math.floor(Math.random() * (3 - 1 + 1)) + 1; // Gera 2, 3 ou 4
+
+        let alpha = 0.2 + Math.random() * (1 - 0.2);
+
+        fundo.push(new Estrelas(posX, posY, tamanho, alpha))
+
+    }
+}
+
+function checkEstrelas(){
+    fundo.forEach(estrela =>{
+        estrela.update()
+    })
+}
+
 
 function disparo(){
     const angle = Math.atan2(-(player.y - player.s1.y), -(player.x - player.s1.x))
@@ -170,7 +204,13 @@ function criarParticulas(enemy){
 
         const size = Math.random()*2
 
-        particles.push(new Particle(enemy.x, enemy.y, size, enemy.color, velocity))
+        const hue = 20 + Math.random() * 30; // 20 (vermelho-alaranjado) até 50 (amarelo)
+        const saturation = 90 + Math.random() * 10; // 90% a 100%
+        const lightness = 40 + Math.random() * 20; // 40% a 60%
+
+        const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+
+        particles.push(new Particle(enemy.x, enemy.y, size, color, velocity))
     }
 }
 
@@ -188,3 +228,4 @@ function checkParticulas(){
 
 loop();
 spawnInimigos();
+criarEstrelas();

@@ -21,10 +21,16 @@ class Sprite{
 }
 
 class Player extends Sprite{
-    constructor(x, y, radius, color){
+    constructor(x, y, radius, color, img){
         super(x, y, radius, color)
 
         this.coreRadius = radius;
+
+        this.img = img
+        this.imgW = 80
+        this.imgH = 80
+
+        this.angulo = 0
 
         this.s1 = new Sphere(
             this.x + Math.cos(0) * this.radius,
@@ -36,28 +42,18 @@ class Player extends Sprite{
             this
         )
 
-        // this.s2 = new Sphere(
-        //     this.x + Math.sin(0) * this.radius,
-        //     this.y + Math.cos(0) * this.radius,
-        //     2,
-        //     '#48fcff',
-        //     0.02,
-        //     Math.PI,
-        //     this
-        // )
     }
 
     draw(){
+        ctx.save();
         ctx.beginPath()
-        ctx.arc(
-            this.x,     
-            this.y, 
-            this.coreRadius, 
-            0, Math.PI*2,
-            false
-            )
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angulo); 
+        ctx.drawImage(this.img,  -this.imgW/2,  -this.imgH/2, this.imgW, this.imgW);
         ctx.strokeStyle = this.color
         ctx.stroke()
+        ctx.restore();
+        this.angulo += 0.005
     }
 
     update(){
@@ -131,6 +127,8 @@ class Enemy extends Projectile{
         }
     }
 
+    
+
     update(){
         this.shrink()
         this.draw()
@@ -156,6 +154,8 @@ class Particle extends Projectile{
         ctx.fill()
 
         ctx.restore()
+
+        
     }
 
     update(){
@@ -167,5 +167,31 @@ class Particle extends Projectile{
 
         this.velocity.x *= .96
         this.velocity.y *= .96
+    }
+}
+
+class Estrelas{
+    constructor(x, y, size, alpha){
+        this.x = x
+        this.y = y
+        this.size = size
+        this.alpha = alpha
+    }
+
+    draw(){
+        
+        ctx.save();  // Salva o estado atual
+        
+        ctx.globalAlpha = this.alpha
+
+        ctx.translate(this.x, this.y);             // Move a origem para o centro do canvas
+        ctx.rotate(45 * Math.PI / 180);  // Rotaciona 45 graus (em radianos)
+        ctx.fillStyle = '#fff';
+        ctx.fillRect( 0 , 0 , this.size, this.size); // Desenha centralizado
+        ctx.restore(); 
+    }
+
+    update(){
+        this.draw()
     }
 }
