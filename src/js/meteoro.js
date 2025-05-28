@@ -58,7 +58,7 @@ function criarMeteoros(){
                                 y: posY, 
                                 radius: radius, 
                                 color: color, 
-                                img: imagemTerra, 
+                                //img: imagemTerra, 
                                 rotacao: 20, 
                                 velocity: velocity
                             }))

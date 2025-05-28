@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas"></canvas>
+
+    <script defer>
+
+    class Terra {
+    constructor(x, y, frameWidth, frameHeight, totalFrames, frameSpeed = 50) {
+        this.x = x;
+        this.y = y;
+        this.frameWidth = frameWidth;
+        this.frameHeight = frameHeight;
+        this.totalFrames = totalFrames;
+        this.frameSpeed = frameSpeed; // menor = mais rápido
+        this.frameIndex = 0;
+        this.tick = 0;
+    }
+
+    update() {
+        this.tick++;
+        if (this.tick >= this.frameSpeed) {
+            this.tick = 0;
+            this.frameIndex = (this.frameIndex + 1) % this.totalFrames;
+        }
+    }
+
+    draw(ctx, img) {
+        const sx = this.frameIndex * this.frameWidth;
+        ctx.drawImage(
+            img,
+            sx, 0,                      // source x, y
+            this.frameWidth, this.frameHeight, // source w, h
+            this.x, this.y,             // destination x, y
+            this.frameWidth, this.frameHeight  // destination w, h
+        );
+    }
+}
+
+    </script>
+
+    <script defer>
+        const cnv = document.getElementById('myCanvas');
+
+        cnv.width = innerWidth;
+        cnv.height = innerHeight;
+
+        const ctx = cnv.getContext('2d')
+
+        const terraImg = new Image();
+        terraImg.src = './src/img/image.png'; // Substitua pelo caminho da sua imagem
+
+        const planeta = new Terra(80, 80, 128, 128, 20); // x, y, largura do quadro, altura, total de quadros
+
+        function animate() {
+            ctx.clearRect(0, 0, cnv.width, cnv.height);
+            
+            planeta.update();
+            planeta.draw(ctx, terraImg);
+
+            requestAnimationFrame(animate);
+        }
+
+        terraImg.onload = () => {
+            animate(); // só começa a animação depois da imagem carregar
+        };
+
+    </script>
+</body>
+</html>
