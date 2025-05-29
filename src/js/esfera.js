@@ -5,6 +5,7 @@ class Esfera extends Sprite{
         this.angleUpdateValue = options.angleUpdateValue || 1
         this.player = options.player
         this.angle = options.angle || 0
+        this.distancia = options.distancia || 0
     }
 
     draw(){
@@ -29,7 +30,7 @@ class Esfera extends Sprite{
             this.angle = 0
         }
 
-        this.x = this.player.x + Math.cos(this.angle) * (this.player.radius + 20)
-        this.y = this.player.y + Math.sin(this.angle) * (this.player.radius + 20)
+        this.x = this.player.x + Math.cos(this.angle) * (this.player.radius + this.distancia)
+        this.y = this.player.y + Math.sin(this.angle) * (this.player.radius + this.distancia)
     }
 }

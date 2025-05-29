@@ -21,6 +21,8 @@ class Sprite{
     }
 
     draw(){
+        
+
         ctx.save();
 
         ctx.beginPath()
@@ -52,6 +54,12 @@ class Sprite{
 
         ctx.restore();
 
-        this.angulo += this.rotacao * 0.001
+        if(Math.abs(this.angulo) <= Math.PI*2){
+            this.angulo += this.rotacao * 0.001
+        }else{
+            this.angulo = 0
+        }
+
+        //console.log(this.angulo)
     }
 }

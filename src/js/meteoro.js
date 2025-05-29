@@ -44,7 +44,7 @@ function criarMeteoros(){
                 posY = Math.random() < 0.5 ? 0 - radius : cnv.height + radius
             }
 
-            const angle = Math.atan2(player.y - posY, player.x - posX)
+            const angle = Math.atan2(planeta.alvo.y - posY, planeta.alvo.x - posX)
 
             const velocity = {
                 x: Math.cos(angle),
@@ -72,10 +72,10 @@ function checkMeteoros(){
     enemies.forEach((enemy)=>{
         enemy.update()
 
-        const distance = Math.hypot(player.x - enemy.x, player.y - enemy.y)
+        const distance = Math.hypot(planeta.x - enemy.x, planeta.y - enemy.y)
 
-        if(distance < player.radius + enemy.radius){
-            //alert('game over')
+        if(distance < planeta.radius + enemy.radius){
+            fimJogo();
         }
     })
 
@@ -92,7 +92,6 @@ function checkMeteorosForaDaTela(){
         ene.y - ene.radius > cnv.height
         ){
             enemies.splice(i, 1)
-            console.log(enemies.length)
         }
     }
 }

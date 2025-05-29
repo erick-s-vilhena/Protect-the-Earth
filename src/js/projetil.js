@@ -14,7 +14,7 @@ class Projetil extends Esfera{
 }
 
 function criarProjetil(){
-    const angle = Math.atan2(-(player.y - player.s1.y), -(player.x - player.s1.x))
+    const angle = Math.atan2(-(planeta.y - planeta.satelite.y), -(planeta.x - planeta.satelite.x))
 
     const velocity = {
         x: Math.cos(angle) * shootingSpeed,
@@ -22,13 +22,13 @@ function criarProjetil(){
     }
 
     projectiles.push(new Projetil({
-                                x: player.s1.x, 
-                                y: player.s1.y, 
-                                radius: 5,
+                                x: planeta.satelite.x, 
+                                y: planeta.satelite.y, 
+                                radius: 2,
                                 velocity: velocity
                             })) 
 
-    player.s1.angleUpdateValue = -player.s1.angleUpdateValue
+    planeta.satelite.angleUpdateValue = -planeta.satelite.angleUpdateValue
 }
 
 function checkProjetil(){
@@ -51,10 +51,14 @@ function checkProjetil(){
                     enemies.splice(e, 1)
                 }
                // enemies.splice(e, 1)
+
+               score += 50 - Math.floor(enemy.radius)
+
+               text_score.innerText = `PONTUAÇÃO: ${score}`
                 
                 projectiles.splice(i, 1)
 
-                criarParticulas(enemy)
+                criarParticulas(enemy, pro)
             }
         }
     }

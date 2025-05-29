@@ -32,8 +32,8 @@ class Particula extends Projetil{
 }
 
 
-function criarParticulas(enemy){
-    for(let i = 0; i < enemy.radius * 2; i++){
+function criarParticulas(meteoro, projetil){
+    for(let i = 0; i < meteoro.radius * 2; i++){
         const velocity = {
             x: (Math.random() - 0.5) * (Math.random() * 6),
             y: (Math.random() - 0.5) * (Math.random() * 6)
@@ -48,8 +48,8 @@ function criarParticulas(enemy){
         const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 
         particles.push(new Particula({
-                                x: enemy.x, 
-                                y: enemy.y, 
+                                x: projetil.x, 
+                                y: projetil.y, 
                                 radius: size, 
                                 color: color, 
                                 velocity: velocity

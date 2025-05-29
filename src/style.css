@@ -7,4 +7,105 @@
 body,html{
     overflow: hidden;
     display: block;
+    font-family: sans-serif;
+}
+
+.score{
+    font-weight: bold;
+    text-shadow: 0 0 8px #48fcff;
+    position: absolute;
+    user-select: none;
+    padding: 8px;
+    color: #fff;
+    opacity: 0;
+}
+
+.modal{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.2);
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.5s;
+    user-select: none;
+    padding: 20px;
+    display: none;
+}
+
+.startModal{
+    opacity: 1;
+    display: flex;
+}
+
+.startContainer{
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 0 5px #48fcff inset;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #000;
+}
+
+h1{
+    font-size: 48px;
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+    text-indent: 5px;
+}
+
+h1{
+    text-shadow:  0 0 5px #48fcff;
+}
+
+
+.gameOverContainer{
+    width: 100%;
+    max-width: 500px;
+    padding: 16px;
+    box-shadow: 0 0 5px #48fcff inset;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #000;
+}
+
+.gameOverContainer > *{
+    text-shadow: 0 0 8px #48fcff;
+    margin: 10px;
+    color: #fff;
+    
+}
+
+hr{
+    box-shadow: 0 0 5px #48fcff;
+}
+
+
+.gameOverScore{
+    margin-top: 20px;
+    font-size: 48px;
+}
+
+.btn{
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: #48fcff;
+    box-shadow: 0 0 5px #48fcff;
+    color: rgb(40, 40, 40);
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.btn:hover{
+    background-color: #46c9cb;
+    box-shadow: 0 0 10px #48fcff;
 }

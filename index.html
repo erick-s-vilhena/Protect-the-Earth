@@ -21,11 +21,36 @@
                 <script defer src="./src/js/particula.js"></script>
 
         <script defer src="./src/js/terra.js"></script>
+
+        <script defer src="./src/js/radome.js"></script>
+
+        <script defer src="./src/js/jogador.js"></script>
         
     <script defer src="./src/js/main.js"></script>
 </head>
 
 <body>
+    <p class="score">PONTUAÇÃO: 0</p>
+
+    <div class="modal">
+        <div class="gameOverContainer">
+            <h2>FIM DE JOGO</h2>
+            <hr>
+            <h1 class="gameOverScore">0</h1>
+            <p>SUA PONTUAÇÃO</p>
+
+            <button class="btn newGame">NOVO JOGO</button>
+        </div>
+    </div>
+
+    <div class="modal startModal">
+        <div class="startContainer">
+            <h1>Proteja a Terra</h1>
+
+            <button class="btn iniciarJogo">COMEÇAR</button>
+        </div>
+    </div>
+
     <canvas id="myCanvas"></canvas>
 </body>
 </html>

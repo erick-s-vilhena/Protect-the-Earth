@@ -1,11 +1,3 @@
-const shootingSpeed = 4
-
-let projectiles = [];
-let enemies = [];
-let particles = [];
-let fundo = [];
-let intervalID;
-
 window.addEventListener('resize', () => {
   location.reload();
 });
@@ -13,6 +5,14 @@ window.addEventListener('resize', () => {
 window.addEventListener('keydown', (e) => {
     if (e.code === 'Space') {
         e.preventDefault()
+
+        if(gameOverModal.style.opacity == 1){
+            novoJogo() 
+        }
+
+        if(startModal.style.opacity == 1){
+            novoJogo()
+        }
 
         criarProjetil();
     }
@@ -24,9 +24,12 @@ cnv.addEventListener('click', (e) => {
     criarProjetil();
 })
 
+btnNewGame.addEventListener('click', novoJogo)
+
+btnInciarJogo.addEventListener('click', novoJogo)
 
 function loop(){
-    requestAnimationFrame(loop, cnv);
+    animateID = requestAnimationFrame(loop, cnv);
 
     update();
 }
@@ -40,9 +43,65 @@ function update(){
     checkProjetil()
     checkParticulas()
 
-    player.update()
+    planeta.update();
+    jogador.update();
 }
 
-loop();
-criarMeteoros();
-criarEstrelas();
+function fimJogo(){
+
+    cancelAnimationFrame(animateID)
+
+    clearInterval(intervalID)
+
+    gameOverScore.innerText = score
+    
+    gameOverModal.style.display = 'flex'
+
+    text_score.style.opacity = 0
+
+    setTimeout(()=>{
+        gameOverModal.style.opacity = 1
+    }, 500)
+}
+
+function novoJogo(){
+    startModal.style.opacity = 0
+    
+    setTimeout(()=>{
+        startModal.style.display = 'none'
+    }, 500)
+
+    gameOverModal.style.opacity = 0
+    
+    setTimeout(()=>{
+        gameOverModal.style.display = 'none'
+    }, 500)
+
+    projectiles = []
+    enemies = []
+    particles = []
+
+    score = 0
+
+    text_score.innerText = `PONTUAÇÃO: ${score}`
+
+    loop();
+
+    criarMeteoros();
+
+    ctx.fillStyle = '#fff'
+    ctx.fillRect(0, 0, cnv.width, cnv.height)
+
+    text_score.style.opacity = 1
+}
+
+function limparTela(){
+
+    ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+    ctx.fillRect(0, 0, cnv.width, cnv.height)
+
+    criarEstrelas();
+    checkEstrelas();
+}
+
+limparTela();
