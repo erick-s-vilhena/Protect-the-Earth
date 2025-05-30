@@ -12,16 +12,8 @@ window.addEventListener('keydown', (e) => {
 
         if(startModal.style.opacity == 1){
             novoJogo()
-        }
-
-        criarProjetil();
+        } 
     }
-})
-
-cnv.addEventListener('click', (e) => {
-    e.preventDefault()
-    
-    criarProjetil();
 })
 
 btnNewGame.addEventListener('click', novoJogo)
@@ -39,16 +31,17 @@ function update(){
     ctx.fillRect(0, 0, cnv.width, cnv.height)
 
     checkEstrelas()
-    checkMeteoros()
-    checkProjetil()
-    checkParticulas()
-    checkSatelite()
 
     planeta.update();
     satelite.update();
     alvo.update();
     jogador.update();
     radome.update();
+
+    checkMeteoros()
+    checkProjetil()
+    checkParticulas()
+    checkSatelite()
 }
 
 function fimJogo(){
@@ -86,6 +79,8 @@ function novoJogo(){
     particles = []
 
     score = 0
+
+    barraDeVida.style.width = '100%'
 
     text_score.innerText = `PONTUAÇÃO: ${score}`
 

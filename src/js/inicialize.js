@@ -5,8 +5,6 @@ cnv.height = innerHeight;
 
 const ctx = cnv.getContext('2d')
 
-const shootingSpeed = 5;
-
 const text_score = document.querySelector('.score')
 
 const gameOverModal = document.querySelector('.modal')
@@ -15,6 +13,9 @@ const btnNewGame = document.querySelector('.btn.newGame')
 
 const startModal = document.querySelector('.startModal')
 const btnInciarJogo = document.querySelector('.btn.iniciarJogo')
+
+const barraTotalDeVida = document.querySelector('.container-barra-de-vida').offsetWidth
+const barraDeVida = document.querySelector('.barra-de-vida')
 
 let projectiles = [];
 let enemies = [];
@@ -29,3 +30,4 @@ let score = 0;
 let tecla_D_Pressionada = false;
 let tecla_A_Pressionada = false;
 let tecla_W_Pressionada = false;
+let tecla_ESPACO_Pressionada = false;

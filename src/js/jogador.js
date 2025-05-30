@@ -5,47 +5,58 @@ class Jogador extends Sprite{
         this.velocidadeRotacao = 0.05
         this.velocidadeMovimento = 4
         this.angulo = 0
+
+        this.morreu = false
+
     }
     draw(){
+        if(!this.morreu){
+            ctx.save();
 
-        ctx.save();
+            ctx.beginPath()
 
-        ctx.beginPath()
+            if(!this.img){
+                ctx.arc(
+                    this.x,     
+                    this.y, 
+                    this.radius, 
+                    0, Math.PI*2,
+                    false
+                    )
+                ctx.strokeStyle = this.color
+                ctx.stroke()
+            }
+            
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.angulo); 
 
-        if(!this.img){
-            ctx.arc(
-                this.x,     
-                this.y, 
-                this.radius, 
-                0, Math.PI*2,
-                false
-                )
-            ctx.strokeStyle = this.color
-            ctx.stroke()
-        }
-        
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angulo); 
+            if(this.img !== undefined){
+                ctx.drawImage(
+                    this.img,  
+                    -this.imgW/2,  
+                    -this.imgH/2, 
+                    this.imgW, 
+                    this.imgH
+                );
+            }
 
-        if(this.img !== undefined){
-            ctx.drawImage(
-                this.img,  
-                -this.imgW/2,  
-                -this.imgH/2, 
-                this.imgW, 
-                this.imgH
-            );
-        }
+            ctx.restore();
 
-        ctx.restore();
-
-        if(Math.abs(this.angulo) <= Math.PI*2){
-            this.angulo += this.rotacao * 0.001
+            if(Math.abs(this.angulo) <= Math.PI*2){
+                this.angulo += this.rotacao * 0.001
+            }else{
+                this.angulo = 0
+            }
         }else{
-            this.angulo = 0
-        }
+            setTimeout(()=>{
+            
+                this.x = planeta.x
+                this.y = planeta.y - planeta.radius - 20
+                this.angulo = 0
 
-        //console.log(this.angulo)
+                this.morreu = false
+            }, 3000)
+        }
     }
 
     update(){
@@ -89,14 +100,13 @@ class Jogador extends Sprite{
             this.y = 0
         }
 
-                    // Calcula a direção do radome (ângulo atual)
-            const direcaoX = Math.sin(this.angulo);
-            const direcaoY = -Math.cos(this.angulo);
+        // Calcula a direção do radome (ângulo atual)
+        const direcaoX = Math.sin(this.angulo);
+        const direcaoY = -Math.cos(this.angulo);
 
-            // Move a nave
-            this.x += direcaoX * 1;
-            this.y += direcaoY * 1;
-            
+        // Move a nave
+        this.x += direcaoX * 1;
+        this.y += direcaoY * 1;   
     }
 }
 

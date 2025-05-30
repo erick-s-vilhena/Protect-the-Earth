@@ -69,13 +69,45 @@ function criarMeteoros(){
 }
 
 function checkMeteoros(){
-    enemies.forEach((enemy)=>{
+    enemies.forEach((enemy, index)=>{
         enemy.update()
 
-        const distance = Math.hypot(planeta.x - enemy.x, planeta.y - enemy.y)
+        const distancia_meteoro_planeta = Math.hypot(planeta.x - enemy.x, planeta.y - enemy.y)
 
-        if(distance < planeta.radius + enemy.radius){
-            //fimJogo();
+        //colião meteoro -> planeta
+        if(distancia_meteoro_planeta < planeta.radius + enemy.radius){
+            let dano = barraDeVida.offsetWidth - ((barraTotalDeVida * enemy.radius)/ 100)
+
+            if(dano <= 0){
+                barraDeVida.style.width = '0px'
+                fimJogo();
+            } 
+            else{
+                barraDeVida.style.width = `${dano}px`
+
+                if(enemy.radius > 15){
+                        enemy.newRadius = enemy.radius - 10
+                    }else{
+                        enemies.splice(index, 1)
+                }
+
+                criarParticulas(enemy, planeta)
+            } 
+        }
+
+        const distancia_meteoro_nave = Math.hypot(jogador.x - enemy.x, jogador.y - enemy.y)
+
+        //colião meteoro -> planeta
+        if(distancia_meteoro_nave < jogador.radius + enemy.radius){
+            if(enemy.radius > 15){
+                    enemy.newRadius = enemy.radius - 10
+                }else{
+                    enemies.splice(index, 1)
+            }
+
+            criarParticulas(enemy, jogador)
+
+            jogador.morreu = true
         }
     })
 

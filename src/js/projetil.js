@@ -3,21 +3,43 @@ class Projetil extends Esfera{
         super(options)
 
         this.velocity = options.velocity || {x: 0, y: 0}
+        this.velocidadeProjetil = 8
     }
     
     update(){
         this.draw()
 
-        this.x += this.velocity.x
-        this.y += this.velocity.y
+        this.x += this.velocity.x * this.velocidadeProjetil
+        this.y += this.velocity.y * this.velocidadeProjetil
     }
 }
+
+window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' && !tecla_ESPACO_Pressionada) {
+        tecla_ESPACO_Pressionada = true;
+        criarProjetil();
+    }
+})
+
+window.addEventListener('keyup', (e) => {
+    if (e.code === 'Space') {
+        tecla_ESPACO_Pressionada = false;
+    }
+})
+
+cnv.addEventListener('click', (e) => {
+    e.preventDefault()
+    
+    if(!tecla_ESPACO_Pressionada){
+        criarProjetil();
+    }
+})
 
 function criarProjetil(){
     
     const velocity = {
-        x: Math.sin(jogador.angulo) * shootingSpeed,
-        y: -Math.cos(jogador.angulo) * shootingSpeed
+        x: Math.sin(jogador.angulo),
+        y: -Math.cos(jogador.angulo) 
     }
 
     projectiles.push(new Projetil({
