@@ -15,7 +15,7 @@ class Projetil extends Esfera{
 }
 
 window.addEventListener('keydown', (e) => {
-    if (e.code === 'Space' && !tecla_ESPACO_Pressionada) {
+    if (e.code === 'Space' && !tecla_ESPACO_Pressionada && !jogador.morreu) {
         tecla_ESPACO_Pressionada = true;
         criarProjetil();
     }
@@ -30,7 +30,7 @@ window.addEventListener('keyup', (e) => {
 cnv.addEventListener('click', (e) => {
     e.preventDefault()
     
-    if(!tecla_ESPACO_Pressionada){
+    if(!tecla_ESPACO_Pressionada && !jogador.morreu){
         criarProjetil();
     }
 })

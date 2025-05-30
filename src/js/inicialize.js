@@ -26,6 +26,10 @@ let intervalID;
 let animateID;
 
 let score = 0;
+let dificultade = score + 1000;
+let tempoCriarMeteoro = 180;
+
+let frameMeteoro = 0
 
 let tecla_D_Pressionada = false;
 let tecla_A_Pressionada = false;

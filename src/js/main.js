@@ -42,6 +42,10 @@ function update(){
     checkProjetil()
     checkParticulas()
     checkSatelite()
+
+    criarMeteoros();
+
+    aumentarDificultade();
 }
 
 function fimJogo(){
@@ -101,6 +105,16 @@ function limparTela(){
 
     criarEstrelas();
     checkEstrelas();
+}
+
+function aumentarDificultade(){
+    if(score > dificultade && tempoCriarMeteoro > 60){
+        tempoCriarMeteoro -= 10
+
+        dificultade += 1000
+    }
+
+    //console.log(dificultade + ' ' + tempoCriarMeteoro)
 }
 
 limparTela();

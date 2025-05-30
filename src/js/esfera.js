@@ -42,7 +42,8 @@ const satelite = new Esfera({
     radius: 4,
     angleUpdateValue: 0.01,
     player: planeta,
-    distancia: 100
+    distancia: 100,
+    color: '#CED9D5'
 })
 
 const alvo = new Esfera({

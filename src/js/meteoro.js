@@ -6,7 +6,10 @@ class Meteoro extends Sprite{
         this.newRadius = options.radius
 
         this.velocity = options.velocity || {x: 0, y: 0}
-    }
+
+        this.img = meteoroGrande
+
+   }
 
     enconher(){
         if(this.newRadius < this.radius){
@@ -21,51 +24,70 @@ class Meteoro extends Sprite{
         this.draw()
         this.x += this.velocity.x
         this.y += this.velocity.y
+
+        if(this.radius < 28 && this.radius > 12 ){
+            this.img = meteoroMedio
+        }
+
+        if(this.radius <= 12){
+            this.img =  meteoroPequeno
+        }
     }
 }
 
+const meteoroGrande = new Image();
+meteoroGrande.src = './src/img/meteoro-grande.svg';
+
+const meteoroMedio = new Image();
+meteoroMedio.src = './src/img/meteoro-medio.svg';
+
+const meteoroPequeno = new Image();
+meteoroPequeno.src = './src/img/meteoro-pequeno.svg';
+
 function criarMeteoros(){
-    intervalID = setInterval(()=>{
-        if(enemies.length < 15){
-            const radius = Math.floor(Math.random() * 26) + 10
+    if(frameMeteoro < tempoCriarMeteoro){
+        frameMeteoro += 1
+    }else{
+        frameMeteoro = 0
+    }
 
-            let posX, posY;
+    if(enemies.length < 15 && frameMeteoro == 30){
+        const radius = Math.floor(Math.random() * 26) + 10
 
-            if(Math.random() < 0.5){
+        let posX, posY;
 
-                posX = Math.random() < 0.5 ? 0 - radius : cnv.width + radius
+        if(Math.random() < 0.5){
 
-                posY = Math.random() * cnv.height
+            posX = Math.random() < 0.5 ? 0 - radius : cnv.width + radius
 
-            }else{
+            posY = Math.random() * cnv.height
 
-                posX = Math.random() * cnv.width
+        }else{
 
-                posY = Math.random() < 0.5 ? 0 - radius : cnv.height + radius
-            }
+            posX = Math.random() * cnv.width
 
-            const angle = Math.atan2(alvo.y - posY, alvo.x - posX)
-
-            const velocity = {
-                x: Math.cos(angle),
-                y: Math.sin(angle)
-            }
-
-            const color = 'hsl('+ Math.random() * 360 +', 50%, 50%)';
-
-            enemies.push(new Meteoro({
-                                x: posX, 
-                                y: posY, 
-                                radius: radius, 
-                                color: color, 
-                                //img: imagemTerra, 
-                                rotacao: 20, 
-                                velocity: velocity
-                            }))
+            posY = Math.random() < 0.5 ? 0 - radius : cnv.height + radius
         }
 
-        //console.log(enemies.length)
-    }, 3000)
+        const angle = Math.atan2(alvo.y - posY, alvo.x - posX)
+
+        const velocity = {
+            x: Math.cos(angle),
+            y: Math.sin(angle)
+        }
+
+        const color = 'hsl('+ Math.random() * 360 +', 50%, 50%)';
+
+        enemies.push(new Meteoro({
+                            x: posX, 
+                            y: posY, 
+                            radius: radius, 
+                            color: color, 
+                            //img: img,
+                            rotacao: 20, 
+                            velocity: velocity
+                        }))
+    }
 }
 
 function checkMeteoros(){
@@ -127,3 +149,4 @@ function checkMeteorosForaDaTela(){
         }
     }
 }
+
