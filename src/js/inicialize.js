@@ -5,7 +5,7 @@ cnv.height = innerHeight;
 
 const ctx = cnv.getContext('2d')
 
-const shootingSpeed = 4;
+const shootingSpeed = 5;
 
 const text_score = document.querySelector('.score')
 
@@ -20,6 +20,12 @@ let projectiles = [];
 let enemies = [];
 let particles = [];
 let fundo = [];
+
 let intervalID;
-let score = 0;
 let animateID;
+
+let score = 0;
+
+let tecla_D_Pressionada = false;
+let tecla_A_Pressionada = false;
+let tecla_W_Pressionada = false;

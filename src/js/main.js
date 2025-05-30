@@ -35,16 +35,20 @@ function loop(){
 }
 
 function update(){
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
     ctx.fillRect(0, 0, cnv.width, cnv.height)
 
     checkEstrelas()
     checkMeteoros()
     checkProjetil()
     checkParticulas()
+    checkSatelite()
 
     planeta.update();
+    satelite.update();
+    alvo.update();
     jogador.update();
+    radome.update();
 }
 
 function fimJogo(){

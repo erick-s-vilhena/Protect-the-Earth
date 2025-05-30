@@ -34,3 +34,47 @@ class Esfera extends Sprite{
         this.y = this.player.y + Math.sin(this.angle) * (this.player.radius + this.distancia)
     }
 }
+
+
+const satelite = new Esfera({
+    x: planeta.x + Math.cos(0) * planeta.radius,
+    y: planeta.y + Math.sin(0) * planeta.radius,
+    radius: 4,
+    angleUpdateValue: 0.01,
+    player: planeta,
+    distancia: 100
+})
+
+const alvo = new Esfera({
+    x: planeta.x + Math.cos(0) * planeta.radius,
+    y: planeta.y + Math.sin(0) * planeta.radius,
+    radius: 4,
+    angleUpdateValue: 0.1,
+    player: planeta,
+    color: 'transparent',
+    distancia: 60,
+})
+
+function checkSatelite(){
+    for(let e = enemies.length - 1; e >= 0; e--){
+        const enemy = enemies[e];
+
+        const distance = Math.hypot(satelite.x - enemy.x, satelite.y - enemy.y)
+
+        //colisão satelite -> inimigo
+        if(distance < satelite.radius + enemy.radius){
+            if(enemy.radius > 15){
+                enemy.newRadius = enemy.radius - 10
+            }else{
+                enemies.splice(e, 1)
+            }
+            // enemies.splice(e, 1)
+
+            score += 50 - Math.floor(enemy.radius)
+
+            text_score.innerText = `PONTUAÇÃO: ${score}`
+
+            criarParticulas(enemy, satelite)
+        }
+    }
+}

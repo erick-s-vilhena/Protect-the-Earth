@@ -44,7 +44,7 @@ function criarMeteoros(){
                 posY = Math.random() < 0.5 ? 0 - radius : cnv.height + radius
             }
 
-            const angle = Math.atan2(planeta.alvo.y - posY, planeta.alvo.x - posX)
+            const angle = Math.atan2(alvo.y - posY, alvo.x - posX)
 
             const velocity = {
                 x: Math.cos(angle),
@@ -65,7 +65,7 @@ function criarMeteoros(){
         }
 
         //console.log(enemies.length)
-    }, 2000)
+    }, 3000)
 }
 
 function checkMeteoros(){
@@ -75,7 +75,7 @@ function checkMeteoros(){
         const distance = Math.hypot(planeta.x - enemy.x, planeta.y - enemy.y)
 
         if(distance < planeta.radius + enemy.radius){
-            fimJogo();
+            //fimJogo();
         }
     })
 

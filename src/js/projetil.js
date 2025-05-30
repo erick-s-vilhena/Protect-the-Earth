@@ -14,21 +14,18 @@ class Projetil extends Esfera{
 }
 
 function criarProjetil(){
-    const angle = Math.atan2(-(planeta.y - planeta.satelite.y), -(planeta.x - planeta.satelite.x))
-
+    
     const velocity = {
-        x: Math.cos(angle) * shootingSpeed,
-        y: Math.sin(angle) * shootingSpeed
+        x: Math.sin(jogador.angulo) * shootingSpeed,
+        y: -Math.cos(jogador.angulo) * shootingSpeed
     }
 
     projectiles.push(new Projetil({
-                                x: planeta.satelite.x, 
-                                y: planeta.satelite.y, 
+                                x: jogador.x, 
+                                y: jogador.y, 
                                 radius: 2,
                                 velocity: velocity
                             })) 
-
-    planeta.satelite.angleUpdateValue = -planeta.satelite.angleUpdateValue
 }
 
 function checkProjetil(){

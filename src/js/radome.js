@@ -2,19 +2,34 @@ class Radome extends Esfera{
     constructor(options = {}){
         super(options)
 
-        
+    }
+
+    draw(){
+        ctx.save();
+
+        ctx.translate(this.player.x, this.player.y);
+        ctx.rotate(this.player .angulo);
+
+        ctx.beginPath();
+        ctx.arc(0, -jogador.radius + this.radius, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+
+        ctx.fill();
+        ctx.closePath();
+
+        // Restaura o estado do canvas (remove rotação/translação)
+        ctx.restore();
     }
 
     update(){
         this.draw()
-
-        this.angle += this.angulo * 0.001
-
-        if(Math.abs(this.angle) >= Math.PI*2){
-            this.angle = 0
-        }
-
-        this.x = this.player.x + Math.cos(this.angle) * (this.player.radius)
-        this.y = this.player.y + Math.sin(this.angle) * (this.player.radius)
     }
 }
+
+const radome = new Radome({
+    x: jogador.x,
+    y: jogador.y - jogador.radius + 20,  // Borda superior
+    radius: 1,
+    color: 'transparent',
+    player: jogador
+})
