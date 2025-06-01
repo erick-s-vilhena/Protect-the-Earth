@@ -52,13 +52,14 @@ class Jogador extends Sprite{
         if(!this.morreu){
             this.draw()
         }else{
-          
-            
+
             this.x = planeta.x
             this.y = planeta.y - planeta.radius - 20
             this.angulo = 0
 
-            this.morreu = false
+            setTimeout(() => {
+                this.morreu = false
+            }, 3000);
           
         }
 

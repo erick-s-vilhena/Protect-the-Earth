@@ -122,7 +122,7 @@ function checkMeteoros(){
         const distancia_meteoro_nave = Math.hypot(jogador.x - enemy.x, jogador.y - enemy.y)
 
         //colião meteoro -> jogador
-        if(distancia_meteoro_nave < jogador.radius + enemy.radius){
+        if(distancia_meteoro_nave < jogador.radius + enemy.radius && !jogador.morreu){
             playSons(explosao)
 
             if(enemy.radius > 15){
