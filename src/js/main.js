@@ -49,6 +49,10 @@ function update(){
 }
 
 function fimJogo(){
+    anti_bug_press_inciar_jogo = false;
+
+    musicGame.pause()
+    musicGame.currentTime = 0
 
     cancelAnimationFrame(animateID)
 
@@ -66,36 +70,57 @@ function fimJogo(){
 }
 
 function novoJogo(){
-    startModal.style.opacity = 0
+    if(!anti_bug_press_inciar_jogo){
+        anti_bug_press_inciar_jogo = true;
+
+        musicGame.play()
+
+        startModal.style.opacity = 0
     
-    setTimeout(()=>{
-        startModal.style.display = 'none'
-    }, 500)
+        setTimeout(()=>{
+            startModal.style.display = 'none'
+        }, 500)
 
-    gameOverModal.style.opacity = 0
+        gameOverModal.style.opacity = 0
+        
+        setTimeout(()=>{
+            gameOverModal.style.display = 'none'
+        }, 500)
+
+        projectiles = []
+        enemies = []
+        particles = []
+
+        score = 0
+
+        barraDeVida.style.width = '100%'
+
+        text_score.innerText = `PONTUAÇÃO: ${score}`
+
+        loop();
+
+        criarMeteoros();
+
+        ctx.fillStyle = '#fff'
+        ctx.fillRect(0, 0, cnv.width, cnv.height)
+
+        text_score.style.opacity = 1
+    }
+}
+
+function playSons(soundType){
+    const som = document.createElement('audio')
     
-    setTimeout(()=>{
-        gameOverModal.style.display = 'none'
-    }, 500)
+    if(soundType === explosao){
+        som.src = "./src/sounds/explosion.ogg"
+    }
+    else{
+        som.src = "./src/sounds/shooting.mp3"
+    }
 
-    projectiles = []
-    enemies = []
-    particles = []
-
-    score = 0
-
-    barraDeVida.style.width = '100%'
-
-    text_score.innerText = `PONTUAÇÃO: ${score}`
-
-    loop();
-
-    criarMeteoros();
-
-    ctx.fillStyle = '#fff'
-    ctx.fillRect(0, 0, cnv.width, cnv.height)
-
-    text_score.style.opacity = 1
+    som.addEventListener('canplaythrough', ()=>{
+        som.play()
+    })
 }
 
 function limparTela(){

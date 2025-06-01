@@ -17,6 +17,13 @@ const btnInciarJogo = document.querySelector('.btn.iniciarJogo')
 const barraTotalDeVida = document.querySelector('.container-barra-de-vida').offsetWidth
 const barraDeVida = document.querySelector('.barra-de-vida')
 
+const musicGame = document.querySelector('#music-game')
+musicGame.volume = .2;
+
+const explosao = 1
+const disparo = 2
+
+
 let projectiles = [];
 let enemies = [];
 let particles = [];
@@ -35,3 +42,5 @@ let tecla_D_Pressionada = false;
 let tecla_A_Pressionada = false;
 let tecla_W_Pressionada = false;
 let tecla_ESPACO_Pressionada = false;
+
+let anti_bug_press_inciar_jogo = false;

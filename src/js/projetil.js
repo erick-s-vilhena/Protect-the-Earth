@@ -36,6 +36,7 @@ cnv.addEventListener('click', (e) => {
 })
 
 function criarProjetil(){
+    playSons(disparo)
     
     const velocity = {
         x: Math.sin(jogador.angulo),
@@ -64,6 +65,8 @@ function checkProjetil(){
 
             //colisão projetil -> inimigo
             if(distance < pro.radius + enemy.radius){
+                playSons(explosao)
+
                 if(enemy.radius > 15){
                     enemy.newRadius = enemy.radius - 10
                 }else{

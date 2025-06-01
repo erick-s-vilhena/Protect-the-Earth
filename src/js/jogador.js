@@ -10,57 +10,57 @@ class Jogador extends Sprite{
 
     }
     draw(){
-        if(!this.morreu){
-            ctx.save();
+        ctx.save();
 
-            ctx.beginPath()
+        ctx.beginPath()
 
-            if(!this.img){
-                ctx.arc(
-                    this.x,     
-                    this.y, 
-                    this.radius, 
-                    0, Math.PI*2,
-                    false
-                    )
-                ctx.strokeStyle = this.color
-                ctx.stroke()
-            }
-            
-            ctx.translate(this.x, this.y);
-            ctx.rotate(this.angulo); 
+        if(!this.img){
+            ctx.arc(
+                this.x,     
+                this.y, 
+                this.radius, 
+                0, Math.PI*2,
+                false
+                )
+            ctx.strokeStyle = this.color
+            ctx.stroke()
+        }
+        
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angulo); 
 
-            if(this.img !== undefined){
-                ctx.drawImage(
-                    this.img,  
-                    -this.imgW/2,  
-                    -this.imgH/2, 
-                    this.imgW, 
-                    this.imgH
-                );
-            }
+        if(this.img !== undefined){
+            ctx.drawImage(
+                this.img,  
+                -this.imgW/2,  
+                -this.imgH/2, 
+                this.imgW, 
+                this.imgH
+            );
+        }
 
-            ctx.restore();
+        ctx.restore();
 
-            if(Math.abs(this.angulo) <= Math.PI*2){
-                this.angulo += this.rotacao * 0.001
-            }else{
-                this.angulo = 0
-            }
+        if(Math.abs(this.angulo) <= Math.PI*2){
+            this.angulo += this.rotacao * 0.001
         }else{
-            setTimeout(()=>{
-            
-                this.x = planeta.x
-                this.y = planeta.y - planeta.radius - 20
-                this.angulo = 0
-
-                this.morreu = false
-            }, 3000)
+            this.angulo = 0
         }
     }
 
     update(){
-        this.draw()
+        if(!this.morreu){
+            this.draw()
+        }else{
+          
+            
+            this.x = planeta.x
+            this.y = planeta.y - planeta.radius - 20
+            this.angulo = 0
+
+            this.morreu = false
+          
+        }
 
         if (tecla_D_Pressionada) {
                 this.angulo += this.velocidadeRotacao;

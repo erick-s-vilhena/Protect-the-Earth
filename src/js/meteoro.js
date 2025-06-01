@@ -98,6 +98,8 @@ function checkMeteoros(){
 
         //colião meteoro -> planeta
         if(distancia_meteoro_planeta < planeta.radius + enemy.radius){
+            playSons(explosao) 
+
             let dano = barraDeVida.offsetWidth - ((barraTotalDeVida * enemy.radius)/ 100)
 
             if(dano <= 0){
@@ -119,8 +121,10 @@ function checkMeteoros(){
 
         const distancia_meteoro_nave = Math.hypot(jogador.x - enemy.x, jogador.y - enemy.y)
 
-        //colião meteoro -> planeta
+        //colião meteoro -> jogador
         if(distancia_meteoro_nave < jogador.radius + enemy.radius){
+            playSons(explosao)
+
             if(enemy.radius > 15){
                     enemy.newRadius = enemy.radius - 10
                 }else{
