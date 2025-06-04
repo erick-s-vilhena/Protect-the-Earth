@@ -53,7 +53,7 @@ const alvo = new Esfera({
     angleUpdateValue: 0.1,
     player: planeta,
     color: 'transparent',
-    distancia: 60,
+    distancia: cnv.width > 600 ? 60 : 40,
 })
 
 function checkSatelite(){

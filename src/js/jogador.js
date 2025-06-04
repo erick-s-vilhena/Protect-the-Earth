@@ -136,3 +136,32 @@ window.addEventListener('keyup', (e) => {
     if (e.code === 'KeyD') tecla_D_Pressionada = false;
     if (e.code === 'KeyA') tecla_A_Pressionada = false;
 })
+
+
+btnAcelerar.addEventListener('touchstart', ()=>{
+    tecla_W_Pressionada = true;
+})
+
+btnAcelerar.addEventListener('touchend', ()=>{
+    tecla_W_Pressionada = false;
+})
+
+
+
+btnDireita.addEventListener('touchstart', ()=>{
+    tecla_D_Pressionada = true;
+})
+
+btnDireita.addEventListener('touchend', ()=>{
+    tecla_D_Pressionada = false;
+})
+
+
+
+btnEsquerda.addEventListener('touchstart', ()=>{
+    tecla_A_Pressionada = true;
+})
+
+btnEsquerda.addEventListener('touchend', ()=>{
+    tecla_A_Pressionada = false;
+})

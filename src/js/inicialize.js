@@ -14,11 +14,17 @@ const btnNewGame = document.querySelector('.btn.newGame')
 const startModal = document.querySelector('.startModal')
 const btnInciarJogo = document.querySelector('.btn.iniciarJogo')
 
+const btnEsquerda = document.querySelector('.btn.esquerda')
+const btnDireita = document.querySelector('.btn.direita')
+const btnAcelerar = document.querySelector('.btn.acelerar')
+const btnAtirar = document.querySelector('.btn.atirar')
+
+
 const barraTotalDeVida = document.querySelector('.container-barra-de-vida').offsetWidth
 const barraDeVida = document.querySelector('.barra-de-vida')
 
 const musicGame = document.querySelector('#music-game')
-musicGame.volume = .2;
+musicGame.volume = .5;
 
 const explosao = 1
 const disparo = 2
@@ -34,7 +40,7 @@ let animateID;
 
 let score = 0;
 let dificultade = score + 1000;
-let tempoCriarMeteoro = 180;
+let tempoCriarMeteoro = 160;
 
 let frameMeteoro = 0
 
