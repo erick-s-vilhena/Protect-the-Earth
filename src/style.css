@@ -135,6 +135,7 @@ hr{
 @media screen and (min-width: 600px) {
     .controles{
         display: none;
+        
     }
 }
 

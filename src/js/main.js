@@ -20,13 +20,18 @@ btnNewGame.addEventListener('click', novoJogo)
 
 btnInciarJogo.addEventListener('click', novoJogo)
 
-function loop(timestamp){
-
-    if (timestamp - ultimoFrame >= intervalo) {
-        ultimoFrame = timestamp;
-    }
-
+function loop(currentTime){
+    
     animateID = requestAnimationFrame(loop);
+
+    // Calcula o tempo decorrido desde o último frame
+    const deltaTime = currentTime - lastTime;
+
+    // Se não passou tempo suficiente para o próximo frame (60FPS), pula a execução
+    if (deltaTime < frameDuration) return;
+
+    // Atualiza o último tempo para o tempo atual (ou acumula o delta)
+    lastTime = currentTime - (deltaTime % frameDuration);
 
     update();
 }
@@ -94,7 +99,9 @@ function novoJogo(){
             gameOverModal.style.display = 'none'
         }, 500)
 
-        controles.style.display = 'initial'
+        if(cnv.width < 600){
+            controles.style.display = 'initial'
+        }
 
         projectiles = []
         enemies = []
