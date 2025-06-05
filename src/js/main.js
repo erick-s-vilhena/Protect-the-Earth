@@ -20,13 +20,21 @@ btnNewGame.addEventListener('click', novoJogo)
 
 btnInciarJogo.addEventListener('click', novoJogo)
 
-function loop() {
-    setTimeout(() => {
-        animateID = requestAnimationFrame(loop);
-        update();
-    }, 1000 / fps);
+function loop(currentTime){
+    
+    animateID = requestAnimationFrame(loop);
+
+    // Calcula o tempo decorrido desde o último frame
+    const deltaTime = currentTime - lastTime;
+
+    // Se não passou tempo suficiente para o próximo frame (60FPS), pula a execução
+    if (deltaTime < frameDuration) return;
+
+    // Atualiza o último tempo para o tempo atual (ou acumula o delta)
+    lastTime = currentTime - (deltaTime % frameDuration);
+
+    update();
 }
-loop();
 
 function update(){
     ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
