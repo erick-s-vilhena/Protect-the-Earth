@@ -5,6 +5,10 @@ cnv.height = innerHeight;
 
 const ctx = cnv.getContext('2d')
 
+let lastTime = 0;
+const fps = 60;
+const interval = 1000 / fps;
+
 const text_score = document.querySelector('.score')
 
 const gameOverModal = document.querySelector('.modal')
