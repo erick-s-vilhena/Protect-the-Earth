@@ -14,6 +14,7 @@ const btnNewGame = document.querySelector('.btn.newGame')
 const startModal = document.querySelector('.startModal')
 const btnInciarJogo = document.querySelector('.btn.iniciarJogo')
 
+const controles = document.querySelector('.controles')
 const btnEsquerda = document.querySelector('.btn.esquerda')
 const btnDireita = document.querySelector('.btn.direita')
 const btnAcelerar = document.querySelector('.btn.acelerar')

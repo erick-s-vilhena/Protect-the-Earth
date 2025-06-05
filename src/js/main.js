@@ -58,6 +58,8 @@ function fimJogo(){
 
     clearInterval(intervalID)
 
+    controles.style.display = 'none'
+
     gameOverScore.innerText = score
     
     gameOverModal.style.display = 'flex'
@@ -86,6 +88,8 @@ function novoJogo(){
         setTimeout(()=>{
             gameOverModal.style.display = 'none'
         }, 500)
+
+        controles.style.display = 'initial'
 
         projectiles = []
         enemies = []
