@@ -28,8 +28,10 @@ window.addEventListener('keyup', (e) => {
 })
 
 btnAtirar.addEventListener('touchstart', ()=>{
-    tecla_ESPACO_Pressionada = true;
-    criarProjetil();
+    if(!jogador.morreu){
+        tecla_ESPACO_Pressionada = true;
+        criarProjetil();
+    }
 })
 
 btnAtirar.addEventListener('touchend', ()=>{
