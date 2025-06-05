@@ -2,7 +2,8 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,
+    maximum-scale=1.0, user-scalable=no">
     <title>Protect the Earth</title>
     <link rel="stylesheet" href="./src/style.css">
 
@@ -63,9 +64,12 @@
     <audio src="./src/sounds/shooting.mp3"></audio>
     <audio src="./src/sounds/explosion.ogg"></audio>
 
-    <audio autoplay>
-        <source src="./src/sounds/thema.mp3" type="audio/mpeg">
-    </audio>
+    <div class="controles">
+        <div class="btn esquerda"></div>
+        <div class="btn direita"></div>
+        <div class="btn acelerar"></div>
+        <div class="btn atirar"></div>
+    </div>
 
     <canvas id="myCanvas"></canvas>
 </body>

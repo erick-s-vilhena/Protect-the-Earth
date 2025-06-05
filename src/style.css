@@ -58,10 +58,13 @@ h1{
     letter-spacing: 5px;
     margin-bottom: 20px;
     text-indent: 5px;
+    text-shadow:  0 0 5px #48fcff;
 }
 
-h1{
-    text-shadow:  0 0 5px #48fcff;
+@media screen and (max-width: 500px) {
+    h1{
+        font-size: 30px;
+    }
 }
 
 
@@ -127,4 +130,44 @@ hr{
     height: 100%;
     background-color: #48fcff;
     transition: all 1s;
+}
+
+@media screen and (min-width: 600px) {
+    .controles{
+        display: none;
+    }
+}
+
+.controles{
+    width: 100%;
+    background-color: rgba(255, 0, 0, 0.297);
+    position: absolute;
+    bottom: 50px;
+}
+
+.controles .btn{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background-color: transparent;
+    border: 2px solid #48fcff;
+}
+
+.btn.esquerda{
+    bottom: 10px;
+    left: 20px;
+}
+
+.btn.direita{
+    bottom: 10px;
+    left: 90px;
+}
+.btn.atirar{
+    bottom: 10px;
+    right:  20px;
+}
+
+.btn.acelerar{
+    bottom: 80px;
+    right:  20px;
 }

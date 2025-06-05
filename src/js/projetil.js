@@ -27,6 +27,15 @@ window.addEventListener('keyup', (e) => {
     }
 })
 
+btnAtirar.addEventListener('touchstart', ()=>{
+    tecla_ESPACO_Pressionada = true;
+    criarProjetil();
+})
+
+btnAtirar.addEventListener('touchend', ()=>{
+    tecla_ESPACO_Pressionada = false;
+})
+
 cnv.addEventListener('click', (e) => {
     e.preventDefault()
     
@@ -63,7 +72,7 @@ function checkProjetil(){
 
             const distance = Math.hypot(pro.x - enemy.x, pro.y - enemy.y)
 
-            //colisão projetil -> inimigo
+            //colisão projetil -> meteoro
             if(distance < pro.radius + enemy.radius){
                 playSons(explosao)
 

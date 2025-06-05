@@ -2,47 +2,37 @@ class Meteoro extends Sprite{
     constructor(options = {}){
         super(options)
 
-    
         this.newRadius = options.radius
 
         this.velocity = options.velocity || {x: 0, y: 0}
 
-        this.img = meteoroGrande
-
    }
 
-    enconher(){
+    encolher(){
         if(this.newRadius < this.radius){
             this.radius -= .5
-            this.imgW -= .5
-            this.imgH -= .5
+            this.imgW = this.radius * 2
+            this.imgH = this.radius * 2
         }
     }
 
     update(){
-        this.enconher()
+        this.encolher()
         this.draw()
         this.x += this.velocity.x
         this.y += this.velocity.y
-
-        if(this.radius < 28 && this.radius > 12 ){
-            this.img = meteoroMedio
-        }
-
-        if(this.radius <= 12){
-            this.img =  meteoroPequeno
-        }
     }
 }
 
-const meteoroGrande = new Image();
-meteoroGrande.src = './src/img/meteoro-grande.svg';
+const meteoro_1 = new Image();
+meteoro_1.src = './src/img/meteoro-branco.svg';
 
-const meteoroMedio = new Image();
-meteoroMedio.src = './src/img/meteoro-medio.svg';
+const meteoro_2 = new Image();
+meteoro_2.src = './src/img/meteoro-cinza.svg';
 
-const meteoroPequeno = new Image();
-meteoroPequeno.src = './src/img/meteoro-pequeno.svg';
+const meteoro_3 = new Image();
+meteoro_3.src = './src/img/meteoro-roxo.svg';
+
 
 function criarMeteoros(){
     if(frameMeteoro < tempoCriarMeteoro){
@@ -52,7 +42,9 @@ function criarMeteoros(){
     }
 
     if(enemies.length < 15 && frameMeteoro == 30){
-        const radius = Math.floor(Math.random() * 26) + 10
+        const radius = cnv.width > 600 ? Math.floor(Math.random() * 26) + 10
+        :
+        Math.floor(Math.random() * 20) + 10
 
         let posX, posY;
 
@@ -76,14 +68,26 @@ function criarMeteoros(){
             y: Math.sin(angle)
         }
 
+        let sprite_meteoro = Math.floor(1 + Math.random() * (4 - 1))
+        
+        if(sprite_meteoro == 1){
+            img = meteoro_1
+        }
+        else if(sprite_meteoro == 2){ 
+            img = meteoro_2
+        }
+        else{
+            img = meteoro_3
+        }
+
         const color = 'hsl('+ Math.random() * 360 +', 50%, 50%)';
 
         enemies.push(new Meteoro({
                             x: posX, 
                             y: posY, 
-                            radius: radius, 
+                            radius: radius,
                             color: color, 
-                            //img: img,
+                            img: img,
                             rotacao: 20, 
                             velocity: velocity
                         }))
@@ -125,13 +129,11 @@ function checkMeteoros(){
         if(distancia_meteoro_nave < jogador.radius + enemy.radius && !jogador.morreu){
             playSons(explosao)
 
-            if(enemy.radius > 15){
-                    enemy.newRadius = enemy.radius - 10
-                }else{
-                    enemies.splice(index, 1)
-            }
+            enemies.splice(index, 1)
 
             criarParticulas(enemy, jogador)
+
+            criarParticulas(enemy, enemy)
 
             jogador.morreu = true
         }

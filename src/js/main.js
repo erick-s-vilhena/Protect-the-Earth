@@ -97,6 +97,8 @@ function novoJogo(){
 
         text_score.innerText = `PONTUAÇÃO: ${score}`
 
+        tempoCriarMeteoro = 180;
+
         loop();
 
         criarMeteoros();
