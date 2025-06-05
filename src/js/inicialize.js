@@ -5,9 +5,8 @@ cnv.height = innerHeight;
 
 const ctx = cnv.getContext('2d')
 
-let lastTime = 0;
-const fps = 60;
-const interval = 1000 / fps;
+let ultimoFrame = 0;
+const intervalo = 1000 / 60;
 
 const text_score = document.querySelector('.score')
 

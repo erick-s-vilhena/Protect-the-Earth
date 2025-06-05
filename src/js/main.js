@@ -22,11 +22,11 @@ btnInciarJogo.addEventListener('click', novoJogo)
 
 function loop(timestamp){
 
-    if (timestamp - lastTime >= interval) {
-        lastTime = timestamp;
+    if (timestamp - ultimoFrame >= intervalo) {
+        ultimoFrame = timestamp;
     }
 
-    animateID = requestAnimationFrame(loop, cnv);
+    animateID = requestAnimationFrame(loop);
 
     update();
 }
