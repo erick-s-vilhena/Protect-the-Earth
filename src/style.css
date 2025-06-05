@@ -144,6 +144,7 @@ hr{
     position: absolute;
     bottom: 50px;
     display: none;
+    user-select: none;
 }
 
 .controles .btn{
@@ -155,6 +156,7 @@ hr{
     display: flex;
     align-items: center;
     justify-content: center;
+    user-select: none;
 }
 
 .btn.esquerda{
