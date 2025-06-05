@@ -177,7 +177,7 @@ hr{
 .btn.atirar{
     bottom: 10px;
     right:  20px;
-    background-image: url(../src/img/seta-cima.svg);
+    background-image: url(../src/img/btn-tiro.svg);
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -185,7 +185,7 @@ hr{
 .btn.acelerar{
     bottom: 110px;
     right:  20px;
-    background-image: url(../src/img/btn-tiro.svg);
+    background-image: url(../src/img/seta-cima.svg);
     background-position: center;
     background-repeat: no-repeat;
 }
